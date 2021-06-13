@@ -23,6 +23,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'signup.html'))
 })
 
+app.post('/failure', (req, res) => {
+    res.redirect('/')
+})
+
 app.post('/', (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -57,6 +61,11 @@ app.post('/', (req, res) => {
     request.write(jsonData);
     request.end();
 })
+
+//404 HANDLER
+app.get('*', function(req, res){
+    res.status(404).sendFile(path.join(__dirname, '404.html'));
+  });
 
 //START SERVER
 app.listen(3000, function () {
