@@ -1,4 +1,5 @@
 //MODULES
+require('dotenv').config()
 const express = require('express');
 const path = require('path')
 const fs = require('fs');
@@ -14,9 +15,8 @@ app.use(express.urlencoded({
 app.use(express.static(path.join(__dirname, 'public')))
 
 //GLOBAL VARIABLES
-const keys = JSON.parse(fs.readFileSync(path.join(__dirname, 'keys.json')));
-const apiKey = keys.apiKey;
-const listId = keys.listId;
+const apiKey = process.env.API_KEY
+const listId = process.env.LIST_ID
 
 //HTTP REQUEST HANDLERS
 app.get('/', (req, res) => {
@@ -68,6 +68,6 @@ app.get('*', function(req, res){
   });
 
 //START SERVER
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
     console.log('Server is running on port 3000');
 })
