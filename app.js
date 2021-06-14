@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //ENVIRONMENT  VARIABLES
 const apiKey = process.env.API_KEY
 const listId = process.env.LIST_ID
+console.log(typeof listId);
 
 //HTTP REQUEST HANDLERS
 app.get('/', (req, res) => {
