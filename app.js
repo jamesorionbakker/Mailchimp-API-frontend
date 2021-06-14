@@ -2,7 +2,6 @@
 require('dotenv').config()
 const express = require('express');
 const path = require('path')
-const fs = require('fs');
 const https = require('https');
 
 //INSTANTIATE EXPRESS
@@ -14,7 +13,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')))
 
-//GLOBAL VARIABLES
+//ENVIRONMENT  VARIABLES
 const apiKey = process.env.API_KEY
 const listId = process.env.LIST_ID
 
@@ -50,7 +49,7 @@ app.post('/', (req, res) => {
     }
     const request = https.request(url, options, function (response) {
         response.on("data", function (data) {
-            console.log(response.statusCode)
+            console.log(JSON.parse(data))
             if (response.statusCode === 200) {
                 res.sendFile(path.join(__dirname, 'success.html'))
             } else {
@@ -63,9 +62,9 @@ app.post('/', (req, res) => {
 })
 
 //404 HANDLER
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
     res.status(404).sendFile(path.join(__dirname, '404.html'));
-  });
+});
 
 //START SERVER
 app.listen(process.env.PORT, function () {
